@@ -1,0 +1,6 @@
+ssl.truststore.location=/usr/local/kafka/ssl/kafka.server.truststore.jks
+ssl.truststore.password=peterpass
+ssl.keystore.location=/usr/local/kafka/ssl/kafka.server.keystore.jks
+ssl.keystore.password=peterpass
+ssl.key.password=peterpass
+security.inter.broker.protocol=SSL

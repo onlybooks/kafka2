@@ -1,0 +1,33 @@
+---
+- hosts:
+   - zkhosts
+   - kafkahosts
+  become: true
+  connection: ssh
+  roles:
+    - common
+  tasks:
+    - name: get service facts
+      service_facts:
+
+    - name: stop kafka-server
+      systemd:
+        state: stopped
+        name: kafka-server
+      when: "'kafka-server.service' in ansible_facts.services"
+
+    - name: delete znode
+      znode:
+        hosts: 'peter-zk01.foo.bar:2181'
+        name: "/{{ item }}"
+        recursive: yes
+        state: absent
+      with_items:
+        - kafka3
+        - kafka4
+
+    - name: stop zookeeper-server
+      systemd:
+        state: stopped
+        name: zookeeper-server
+      when: "'zookeeper-server.service' in ansible_facts.services"

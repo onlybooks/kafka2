@@ -1,0 +1,7 @@
+security.inter.broker.protocol=SASL_PLAINTEXT
+sasl.mechanism.inter.broker.protocol=GSSAPI
+sasl.enabled.mechanism=GSSAPI
+sasl.kerberos.service.name=kafka
+# 아래 내용 추가
+authorizer.class.name=kafka.security.authorizer.AclAuthorizer
+super.users=User:admin;User:kafka

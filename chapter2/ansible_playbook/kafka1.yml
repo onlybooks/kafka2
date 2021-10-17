@@ -1,0 +1,10 @@
+---
+- hosts: kafkahosts
+  become: true
+  connection: ssh
+  vars:
+    - zookeeperinfo: peter-zk01.foo.bar:2181,peter-zk02.foo.bar:2181,peter-zk03.foo.bar:2181/kafka1
+    - dir_path: /data/kafka1-logs
+  roles:
+    - common
+    - kafka

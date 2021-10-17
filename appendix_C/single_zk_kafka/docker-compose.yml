@@ -1,0 +1,46 @@
+version: "3.5"
+services:
+  zk:
+    image: confluentinc/cp-zookeeper:5.5.1
+    restart: always
+    hostname: zk
+    container_name: zk
+    ports:
+      - "2181:2181"
+    environment:
+      - ZOOKEEPER_SERVER_ID=1
+      - ZOOKEEPER_CLIENT_PORT=2181
+      - ZOOKEEPER_TICK_TIME=2000
+      - ZOOKEEPER_INIT_LIMIT=5
+      - ZOOKEEPER_SYNC_LIMIT=2
+      - ZOOKEEPER_SERVERS=zk:2888:3888
+
+  kafka:
+    image: confluentinc/cp-kafka:5.5.1
+    restart: always
+    hostname: kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+      - "9999:9999"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zk:2181
+      KAFKA_LISTENERS: INTERNAL://kafka:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_JMX_PORT: 9999
+
+  kafka_manager:
+    image: hlebalbau/kafka-manager:stable
+    container_name: cmak
+    ports:
+      - "9000:9000"
+    environment:
+      ZK_HOSTS: "zk:2181"
+      APPLICATION_SECRET: "random-secret"
+    command: -Dpidfile.path=/dev/null

@@ -1,0 +1,10 @@
+tickTime=2000
+initLimit=10
+syncLimit=5
+dataDir=/data/zk
+clientPort=2181
+autopurge.snapRetainCount=3
+autopurge.purgeInterval=1
+{% for host in groups['zkhosts'] %}
+server.{{ host | regex_search('(peter-zk0[1-9]\\.foo\\.bar)') | regex_replace('\\.foo\\.bar', '') | regex_replace('^peter-zk0', '') }}={{ host }}:2888:3888;2181
+{% endfor %}

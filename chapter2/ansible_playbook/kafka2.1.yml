@@ -1,0 +1,9 @@
+---
+- hosts: kafkahosts
+  become: true
+  connection: ssh
+  vars:
+    - kafkaversion: 2.1.0
+  roles:
+    - common
+    - kafka

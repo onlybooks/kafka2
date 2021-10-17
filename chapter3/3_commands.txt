@@ -1,0 +1,13 @@
+P62
+cd /data/kafka-logs/
+ls
+
+P63
+cd peter-overview01-0
+ls
+
+P64
+xxd 00000000000000000000.log
+
+P73
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --create --topic peter-basic01 --partitions 1 --replication-factor 3

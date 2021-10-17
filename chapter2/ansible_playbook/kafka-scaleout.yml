@@ -1,0 +1,12 @@
+---
+- hosts: peter-zk03.foo.bar
+  become: true
+  connection: ssh
+  vars:
+    - kafkaversion: 2.6.0
+    - brokerid: 4
+    - zookeeperinfo: peter-zk01.foo.bar:2181,peter-zk02.foo.bar:2181,peter-zk03.foo.bar:2181
+    - dir_path: /data/kafka-logs
+  roles:
+    - common
+    - kafka

@@ -1,0 +1,9 @@
+---
+- import_playbook: stop-etc.yml
+- import_playbook: local-kafka.yml
+- import_playbook: stop-kafka.yml
+- import_playbook: zookeeper.yml
+- import_playbook: kafka3.yml
+- import_playbook: kafka4.yml
+- import_playbook: schema-registry.yml
+- import_playbook: es.yml

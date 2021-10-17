@@ -1,0 +1,112 @@
+version: "3.5"
+services:
+  zk1:
+    image: confluentinc/cp-zookeeper:5.5.1
+    restart: always
+    hostname: zk1
+    container_name: zk1
+    ports:
+      - "2181:2181"
+    environment:
+      - ZOOKEEPER_SERVER_ID=1
+      - ZOOKEEPER_CLIENT_PORT=2181
+      - ZOOKEEPER_TICK_TIME=2000
+      - ZOOKEEPER_INIT_LIMIT=5
+      - ZOOKEEPER_SYNC_LIMIT=2
+      - ZOOKEEPER_SERVERS=zk1:2888:3888;zk2:2888:3888;zk3:2888:3888
+  zk2:
+    image: confluentinc/cp-zookeeper:5.5.1
+    restart: always
+    hostname: zk2
+    container_name: zk2
+    ports:
+      - "2182:2182"
+    environment:
+      - ZOOKEEPER_SERVER_ID=2
+      - ZOOKEEPER_CLIENT_PORT=2182
+      - ZOOKEEPER_TICK_TIME=2000
+      - ZOOKEEPER_INIT_LIMIT=5
+      - ZOOKEEPER_SYNC_LIMIT=2
+      - ZOOKEEPER_SERVERS=zk1:2888:3888;zk2:2888:3888;zk3:2888:3888
+  zk3:
+    image: confluentinc/cp-zookeeper:5.5.1
+    restart: always
+    hostname: zk3
+    container_name: zk3
+    ports:
+      - "2183:2183"
+    environment:
+      - ZOOKEEPER_SERVER_ID=3
+      - ZOOKEEPER_CLIENT_PORT=2183
+      - ZOOKEEPER_TICK_TIME=2000
+      - ZOOKEEPER_INIT_LIMIT=5
+      - ZOOKEEPER_SYNC_LIMIT=2
+      - ZOOKEEPER_SERVERS=zk1:2888:3888;zk2:2888:3888;zk3:2888:3888
+
+  kafka1:
+    image: confluentinc/cp-kafka:5.5.1
+    restart: always
+    hostname: kafka1
+    container_name: kafka1
+    ports:
+      - "9091:9091"
+      - "9991:9991"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2182,zk3:2183
+      KAFKA_LISTENERS: INTERNAL://kafka1:9091
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:9091
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_JMX_PORT: 9991
+  kafka2:
+    image: confluentinc/cp-kafka:5.5.1
+    restart: always
+    hostname: kafka2
+    container_name: kafka2
+    ports:
+      - "9092:9092"
+      - "9992:9992"
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2182,zk3:2183
+      KAFKA_LISTENERS: INTERNAL://kafka2:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_JMX_PORT: 9992
+  kafka3:
+    image: confluentinc/cp-kafka:5.5.1
+    restart: always
+    hostname: kafka3
+    container_name: kafka3
+    ports:
+      - "9093:9093"
+      - "9993:9993"
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2182,zk3:2183
+      KAFKA_LISTENERS: INTERNAL://kafka3:9093
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka3:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 2
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_JMX_PORT: 9993
+
+  kafka_manager:
+    image: hlebalbau/kafka-manager:stable
+    container_name: cmak
+    ports:
+      - "9000:9000"
+    environment:
+      ZK_HOSTS: "zk1:2181,zk2:2182,zk3:2183"
+      APPLICATION_SECRET: "random-secret"
+    command: -Dpidfile.path=/dev/null

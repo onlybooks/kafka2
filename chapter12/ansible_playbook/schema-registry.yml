@@ -1,0 +1,6 @@
+---
+- hosts: schemaregistry
+  become: true
+  connection: ssh
+  roles:
+    - schemaregistry

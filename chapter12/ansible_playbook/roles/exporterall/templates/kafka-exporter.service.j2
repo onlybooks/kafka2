@@ -1,0 +1,10 @@
+[Unit]
+Description=kafka-exporter
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/kafka_exporter --kafka.server={{ inventory_hostname }}:9092
+ExecStop=/usr/sbin/kafka-exporter-stop.sh
+
+[Install]
+WantedBy=multi-user.target

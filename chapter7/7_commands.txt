@@ -1,0 +1,72 @@
+P203
+cat /usr/local/kafka/config/log4j.properties
+
+P204
+sudo vi /usr/local/kafka/config/log4j.properties
+sudo systemctl restart kafka-server
+
+P205
+cat /usr/local/kafka/logs/server.log
+
+P207
+cat /usr/local/kafka/config/jmx
+netstat -ntl | grep 9999
+
+P208
+sudo amazon-linux-extras install -y docker
+sudo docker version
+sudo service docker start
+sudo usermod -a -G docker ec2-user
+sudo yum install -y git
+sudo chkconfig docker on
+sudo reboot
+sudo systemctl status docker
+sudo mkdir -p /etc/prometheus
+git clone https://github.com/onlybooks/kafka2.git
+
+P209
+sudo cp kafka2/chapter7/prometheus.yml /etc/prometheus/
+sudo docker run -d --network host -p 9090:9090 -v /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml --name prometheus prom/prometheus
+sudo docker ps
+
+P210
+sudo docker run -d --network host -p 3000:3000 --name grafana grafana/grafana:7.3.7
+sudo docker ps
+
+P211
+sudo mkdir -p /usr/local/jmx
+sudo yum -y install git
+git clone https://github.com/onlybooks/kafka2.git
+sudo cp kafka2/chapter7/jmx_prometheus_httpserver-0.13.1-SNAPSHOT-jar-with-dependencies.jar /usr/local/jmx/
+sudo cp kafka2/chapter7/jmx_prometheus_httpserver.yml /usr/local/jmx/
+
+P213
+sudo cp kafka2/chapter7/jmx-exporter.service /etc/systemd/system
+sudo systemctl daemon-reload
+sudo systemctl start jmx-exporter
+sudo systemctl status jmx-exporter
+curl http://localhost:7071/metrics
+
+P214
+wget https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-386.tar.gz
+sudo tar zxf node_exporter-1.0.1.linux-386.tar.gz -C /usr/local/
+
+P215
+sudo ln -s /usr/local/node_exporter-1.0.1.linux-386 /usr/local/node_exporter
+sudo cp kafka2/chapter7/node-exporter.service /etc/systemd/system
+sudo systemctl daemon-reload
+sudo systemctl start node-exporter
+sudo systemctl status node-exporter
+
+P217
+curl -X GET http://localhost:9090/api/v1/status/config | python -m json.tool
+
+P225
+cat kafka2/chapter7/kafka_metrics.json
+
+P231
+cd /home/ec2-user/kafka2/chapter2/ansible_playbook
+ansible-playbook -i hosts kafka-exporter.yml
+
+P232
+sudo vi /etc/prometheus/prometheus.yml

@@ -1,0 +1,6 @@
+user_name: ec2-user
+krb_realm: FOO.BAR
+krb_dns: foo.bar
+kadmin_pass: peterpass
+kdc_server: peter-zk01.foo.bar
+kafkaversion: 2.6.0

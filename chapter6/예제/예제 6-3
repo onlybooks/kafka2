@@ -1,0 +1,12 @@
+hostname = socket.gethostname()
+broker = 'peter-kafka01.foo.bar'
+group = 'peter-consumer02'
+topic = 'peter-test06'
+
+c = Consumer({
+    'bootstrap.servers': broker,
+    'group.id': group,
+    'session.timeout.ms': 30000,
+    'group.instance.id': 'consumer-' + hostname,
+    'auto.offset.reset': 'earliest'
+})

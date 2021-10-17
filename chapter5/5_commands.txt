@@ -1,0 +1,27 @@
+P142
+vi /home/ec2-user/producer.config
+
+P143
+/usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-test04 --producer.config /home/ec2-user/producer.config
+
+P144
+cd /data/kafka-logs/peter-test04-0/
+ls
+/usr/local/kafka/bin/kafka-dump-log.sh --print-data-log --files /data/kafka-logs/peter-test04-0/00000000000000000001.snapshot
+
+P153
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --create --topic peter-test05 --partitions 1 --replication-factor 3
+
+P154
+sudo yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
+java -version
+cd kafka2/chapter5/
+java -jar ExactlyOnceProducer.jar
+
+P155
+cat /data/kafka-logs/peter-test02-0/leader-epoch-checkpoint
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --list
+/usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic __transaction_state --consumer.config /home/ec2-user/consumer.config --formatter "kafka.coordinator.transaction.TransactionLog\$TransactionLogMessageFormatter" --from-beginning
+
+P157
+/usr/local/kafka/bin/kafka-dump-log.sh --print-data-log --files /data/kafka-logs/peter-test05-0/00000000000000000000.log

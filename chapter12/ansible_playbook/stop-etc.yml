@@ -1,0 +1,31 @@
+---
+- hosts:
+   - zkhosts
+   - kafkahosts
+  become: true
+  connection: ssh
+  tasks:
+    - name: get service facts
+      service_facts:
+
+    - name: stop kafka-connect
+      systemd:
+        state: stopped
+        name: kafka-connect
+      when: "'kafka-connect.service' in ansible_facts.services"
+
+    - name: stop schema-registry
+      systemd:
+        state: stopped
+        name: schema-registry
+      when: "'schema-registry.service' in ansible_facts.services"
+
+    - name: stop exporters
+      systemd:
+        state: stopped
+        name: "{{ item }}"
+      with_items:
+        - kafka-exporter
+        - node-exporter
+        - jmx-exporter
+      ignore_errors: yes

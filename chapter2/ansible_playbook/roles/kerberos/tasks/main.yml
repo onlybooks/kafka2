@@ -1,0 +1,57 @@
+---
+- name: install krb5
+  yum:
+    name: ['krb5-server', 'krb5-libs', 'krb5-workstation']
+    state: latest
+
+- name: copy kdc conf
+  template:
+    src: kdc.conf.j2
+    dest: /var/kerberos/krb5kdc/kdc.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: no
+
+- name: copy krb5 conf
+  template:
+    src: krb5.conf.j2
+    dest: /etc/krb5.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: no
+
+- name: replace string
+  replace:
+    path: /var/kerberos/krb5kdc/kadm5.acl
+    regexp: 'EXAMPLE.COM'
+    replace: "{{ krb_realm }}"
+
+- name: check principal exist
+  stat:
+    path: /var/kerberos/krb5kdc/principal
+  register: stat_result
+
+- name: create KDC database
+  shell: kdb5_util create -r {{ krb_realm }} -P {{ kadmin_pass }} -s
+  when: not stat_result.stat.exists
+
+- name: create root
+  shell: |
+    kadmin.local -q "addprinc -pw {{ kadmin_pass }} root/admin"
+    kadmin.local -q "add_principal -randkey peter-kafka01.foo.bar@FOO.BAR"
+    kadmin.local -q "add_principal -randkey peter-kafka02.foo.bar@FOO.BAR"
+    kadmin.local -q "add_principal -randkey peter-kafka03.foo.bar@FOO.BAR"
+    kadmin.local -q "add_principal -randkey peter-zk01.foo.bar@FOO.BAR"
+    kadmin.local -q "add_principal -randkey peter-zk02.foo.bar@FOO.BAR"
+    kadmin.local -q "add_principal -randkey peter-zk03.foo.bar@FOO.BAR"
+
+- name: make sure a service is running
+  systemd:
+    state: started
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - krb5kdc
+    - kadmin

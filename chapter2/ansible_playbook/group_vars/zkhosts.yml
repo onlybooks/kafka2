@@ -1,0 +1,3 @@
+zookeeperversion: zookeeper-3.5.9
+myid: "{{ inventory_hostname | regex_search('(peter-zk0[0-9]\\.foo\\.bar)') | regex_replace('\\.foo\\.bar', '') | regex_replace('^peter-zk0', '') }}"
+dir_path: /data/zk

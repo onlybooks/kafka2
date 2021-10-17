@@ -1,0 +1,49 @@
+---
+- name: add the group prometheus
+  group:
+    name: prometheus
+    state: present
+
+- name: add the user prometheus
+  user:
+    name: prometheus
+    group: prometheus
+    state: present
+
+- name: make dir prometheus
+  file:
+    path: /etc/prometheus
+    state: directory
+    owner: prometheus
+    group: prometheus
+    mode: '0755'
+
+- name: copy prometheus.yml conf file
+  copy:
+    src: prometheus.yml
+    dest: /etc/prometheus/prometheus.yml
+    owner: prometheus
+    group: prometheus
+    mode: '0755'
+
+- name: start prometheus container
+  docker_container:
+    name: prometheus
+    image: prom/prometheus
+    network_mode: host
+    volumes:
+      - /etc/prometheus:/etc/prometheus
+
+- name: start grafana container
+  docker_container:
+    name: grafana
+    image: grafana/grafana:7.3.7
+    network_mode: host
+
+- name: start kafka-manager container
+  docker_container:
+    name: cmak
+    image: hlebalbau/kafka-manager:stable
+    network_mode: host
+    env:
+      ZK_HOSTS: "peter-zk01.foo.bar:2181,peter-zk02.foo.bar:2181,peter-zk03.foo.bar:2181"

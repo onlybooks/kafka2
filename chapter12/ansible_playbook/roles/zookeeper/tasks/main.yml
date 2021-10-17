@@ -1,0 +1,86 @@
+---
+- name: add the group zookeeper
+  group:
+    name: zookeeper
+    state: present
+
+- name: add the user zookeeper
+  user:
+    name: zookeeper
+    group: zookeeper
+    state: present
+
+- name: remove directory zk data
+  file:
+    path: "{{ dir_path }}"
+    state: absent
+
+- name: make dir zookeeper
+  file:
+    path: "{{ dir_path }}"
+    state: directory
+    owner: zookeeper
+    group: zookeeper
+    mode: '0755'
+
+- name: download zookeeper from web
+  get_url:
+    url: https://archive.apache.org/dist/zookeeper/{{ zookeeperversion }}/apache-{{ zookeeperversion }}-bin.tar.gz
+    dest: /opt/
+    mode: '0600'
+
+- name: unarchive zookeeper
+  unarchive:
+    src: /opt/apache-{{ zookeeperversion }}-bin.tar.gz
+    dest: /usr/local
+    owner: zookeeper
+    group: zookeeper
+    creates: /usr/local/apache-{{ zookeeperversion }}-bin
+    remote_src: yes
+
+- name: setup link zookeeper
+  file:
+    path: /usr/local/zookeeper
+    src: /usr/local/apache-{{ zookeeperversion }}-bin
+    owner: zookeeper
+    group: zookeeper
+    state: link
+    force: yes
+
+- name: copy zookeeper server conf files
+  template:
+    src: zoo.cfg.j2
+    dest: /usr/local/zookeeper/conf/zoo.cfg
+    owner: zookeeper
+    group: zookeeper
+    mode: '0644'
+    backup: no
+
+- name: create myid
+  shell: echo {{ myid }} > /data/zk/myid
+
+- name: change file ownership, group and permissions
+  file:
+    path: /data/zk/myid
+    owner: zookeeper
+    group: zookeeper
+    mode: '0644'
+
+- name: copy zookeeper server in systemd
+  copy:
+    src: zookeeper-server.service
+    dest: /etc/systemd/system/zookeeper-server.service
+    owner: root
+    group: root
+    mode: '0644'
+    backup: no
+
+- name: just force systemd to reload configs
+  systemd:
+    daemon_reload: yes
+
+- name: make sure a service is running
+  systemd:
+    state: started
+    name: zookeeper-server
+    enabled: yes

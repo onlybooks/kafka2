@@ -1,0 +1,83 @@
+P236
+/usr/local/kafka/bin/kafka-topics.sh --version
+
+P237
+ls -l /usr/local/kafka/libs/kafka_*
+
+P239
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --delete --topic peter-test06
+sudo systemctl stop kafka-server
+
+P240
+cd chapter2/ansible_playbook
+ansible-playbook -i hosts kafka2.1.yml
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --create --topic peter-version2-1 --partitions 1 --replication-factor 3
+
+P241
+/usr/local/kafka/bin/kafka-topics.sh --zookeeper peter-zk01.foo.bar --create --topic peter-version2-1 --partitions 1 --replication-factor 3
+/usr/local/kafka/bin/kafka-console-producer.sh --broker-list peter-kafka01.foo.bar:9092 --topic peter-version2-1
+/usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-version2-1 --from-beginning --group peter-consumer
+
+P242
+cd /usr/local/
+ll
+sudo cp kafka_2.12-2.1.0/config/server.properties kafka_2.12-2.6.0/config/server.properties
+sudo vi kafka_2.12-2.6.0/config/server.properties
+
+P243
+cd /usr/local/
+sudo systemctl stop kafka-server
+sudo rm -rf kafka
+sudo ln -sf kafka_2.12-2.6.0 kafka
+ll
+
+P244
+sudo systemctl start kafka-server
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-version2-1 --describe
+cd /usr/local/
+sudo systemctl stop kafka-server
+sudo rm -rf kafka
+sudo ln -sf kafka_2.12-2.6.0 kafka
+sudo systemctl start kafka-server
+
+P245
+cd /usr/local/
+sudo systemctl stop kafka-server
+sudo rm -rf kafka
+sudo ln -sf kafka_2.12-2.6.0 kafka
+sudo systemctl start kafka-server
+
+P246
+sudo vi /usr/local/kafka/config/server.properties
+sudo systemctl restart kafka-server
+/usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-version2-1
+
+P247
+/usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-version2-1 --group peter-consumer
+/usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-version2-1 --from-beginning
+
+P249
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --create --topic peter-scaleout1 --partitions 4 --replication-factor 1
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --describe --topic peter-scaleout1
+
+P250
+cd chapter2/ansible_playbook
+ansible-playbook -i hosts kafka-scaleout.yml
+sudo vi /usr/local/kafka/config/server.properties
+
+P251
+sudo systemctl status kafka-server
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --create --topic peter-scaleout2 --partitions 4 --replication-factor 1
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --describe --topic peter-scaleout2
+
+P254
+/usr/local/kafka/bin/kafka-reassign-partitions.sh --bootstrap-server peter-kafka01.foo.bar:9092 --generate --topics-to-move-json-file reassign-partitions-topic.json --broker-list "1,2,3,4"
+
+P256
+/usr/local/kafka/bin/kafka-reassign-partitions.sh --bootstrap-server peter-kafka01.foo.bar:9092 --reassignment-json-file move.json --execute
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --describe --topic peter-scaleout1
+
+P259
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --delete --topic peter-scaleout1
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --delete --topic peter-scaleout2
+sudo systemctl stop kafka-server

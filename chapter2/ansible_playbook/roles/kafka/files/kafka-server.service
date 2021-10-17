@@ -1,0 +1,15 @@
+[Unit]
+Description=kafka-server
+After=network.target
+
+[Service]
+Type=simple
+SyslogIdentifier=kafka-server
+WorkingDirectory=/usr/local/kafka
+EnvironmentFile=/usr/local/kafka/config/jmx
+Restart=always
+ExecStart=/usr/local/kafka/bin/kafka-server-start.sh /usr/local/kafka/config/server.properties
+ExecStop=/usr/local/kafka/bin/kafka-server-stop.sh
+
+[Install]
+WantedBy=multi-user.target

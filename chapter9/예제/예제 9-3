@@ -1,0 +1,7 @@
+listeners=PLAINTEXT://0.0.0.0:9092,SSL://0.0.0.0:9093,SASL_PLAINTEXT://0.0.0.0:9094
+advertised.listeners=PLAINTEXT://peter-kafka01.foo.bar:9092,SSL://peter-kafka01.foo.bar:9093,SASL_PLAINTEXT://peter-kafka01.foo.bar:9094
+
+security.inter.broker.protocol=SASL_PLAINTEXT
+sasl.mechanism.inter.broker.protocol=GSSAPI
+sasl.enabled.mechanism=GSSAPI
+sasl.kerberos.service.name=kafka

@@ -1,0 +1,44 @@
+---
+- name: download kafka exporter from web
+  get_url:
+    url: https://github.com/danielqsj/kafka_exporter/releases/download/v1.2.0/kafka_exporter-1.2.0.linux-386.tar.gz
+    dest: /opt/
+    mode: '0600'
+
+- name: unarchive kafka exporter
+  unarchive:
+    src: /opt/kafka_exporter-1.2.0.linux-386.tar.gz
+    dest: /usr/local/
+    remote_src: yes
+
+- name: move to kafka_exporter
+  copy:
+    remote_src: yes
+    src: /usr/local/kafka_exporter-1.2.0.linux-386/kafka_exporter
+    dest: /usr/sbin/
+    mode: '0755'
+
+- name: copy kafka exporter stop
+  copy:
+    src: kafka-exporter-stop.sh
+    dest: /usr/sbin/kafka-exporter-stop.sh
+    mode: '0755'
+
+- name: copy kafka exporter in systemd
+  template:
+    src: kafka-exporter.service.j2
+    dest: /etc/systemd/system/kafka-exporter.service
+    owner: root
+    group: root
+    mode: '0644'
+    backup: no
+
+- name: just force systemd to reload configs
+  systemd:
+    daemon_reload: yes
+
+- name: make sure a service is running
+  systemd:
+    state: started
+    name: kafka-exporter
+    enabled: yes

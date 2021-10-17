@@ -1,0 +1,74 @@
+---
+- name: stop kafka-server
+  systemd:
+    state: stopped
+    name: kafka-server
+  ignore_errors: yes
+
+- name: remove directory kafka
+  file:
+    path: "{{ dir_path }}"
+    state: absent
+
+- name: make dir kafka
+  file:
+    path: "{{ dir_path }}"
+    state: directory
+    mode: '0755'
+
+- name: download kafka from web
+  get_url:
+    url: https://archive.apache.org/dist/kafka/{{ kafkaversion }}/kafka_2.12-{{ kafkaversion }}.tgz
+    dest: /opt/
+    mode: '0600'
+
+- name: unarchive kafka
+  unarchive:
+    src: /opt/kafka_2.12-{{ kafkaversion }}.tgz
+    dest: /usr/local
+    remote_src: yes
+
+- name: setup link kafka
+  file:
+    path: /usr/local/kafka
+    src: /usr/local/kafka_2.12-{{ kafkaversion }}
+    state: link
+    force: yes
+
+- name: copy kafka server conf files
+  template:
+    src: server.properties.j2
+    dest: /usr/local/kafka/config/server.properties
+    mode: '0644'
+    backup: no
+
+- name: copy kafka conf file
+  copy:
+    src: "{{ item }}"
+    dest: /usr/local/kafka/config/
+    mode: '0644'
+    backup: no
+  with_items:
+    - jmx
+    - connect-distributed.properties
+
+- name: copy kafka server in systemd
+  copy:
+    src: "{{ item }}"
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+    mode: '0644'
+    backup: no
+  with_items:
+    - kafka-server.service
+    - kafka-connect.service
+
+- name: just force systemd to reload configs
+  systemd:
+    daemon_reload: yes
+
+- name: make sure a service is running
+  systemd:
+    state: started
+    name: kafka-server

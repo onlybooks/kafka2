@@ -1,0 +1,14 @@
+[Unit]
+Description=kafka-connect
+After=network.target kafka-server.target
+
+[Service]
+Type=simple
+SyslogIdentifier=kafka-connect
+WorkingDirectory=/usr/local/kafka
+Restart=always
+ExecStart=/usr/local/kafka/bin/connect-distributed.sh /usr/local/kafka/config/connect-distributed.properties
+ExecStop=/usr/local/kafka/bin/connect-distributed.sh
+
+[Install]
+WantedBy=multi-user.target

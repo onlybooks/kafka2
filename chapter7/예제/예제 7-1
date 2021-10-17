@@ -1,0 +1,2 @@
+log4j.logger.kafka=DEBUG
+log4j.logger.org.apache.kafka=DEBUG

@@ -1,0 +1,56 @@
+P377
+cd kafka2/
+cd chapter2/ansible_playbook
+ansible-playbook -i hosts kafka1.yml
+
+P378
+echo "hello-1" > test.txt
+echo "hello-2" >> test.txt
+echo "hello-3" >> test.txt
+cat test.txt
+
+P379
+sudo vi /usr/local/kafka/config/connect-file-source.properties
+sudo vi /usr/local/kafka/config/connect-standalone.properties
+
+P381
+sudo /usr/local/kafka/bin/connect-standalone.sh -daemon /usr/local/kafka/config/connect-standalone.properties /usr/local/kafka/config/connect-file-source.properties
+curl http://localhost:8083/connectors/local-file-source | python -m json.tool
+
+P382
+curl --header "Content-Type: application/json" --header "Accept: application/json" --request PUT --data '{ "name":"local-file-sink", "connector.class":"FileStreamSink", "tasks.max":"1", "file":"/home/ec2-user/test.sink.txt", "topics":"connect-test"}' http://localhost:8083/connectors/local-file-sink/config
+curl http://localhost:8083/connectors/local-file-sink | python -m json.tool
+
+P383
+cat test.sink.txt
+sudo pkill -f connect
+
+P387
+sudo cat /usr/local/kafka/config/connect-distributed.properties
+
+P388
+sudo systemctl start kafka-connect
+sudo systemctl status kafka-connect
+
+P393
+cd kafka2/
+cd chapter2/ansible_playbook
+ansible-playbook -i hosts kafka2.yml
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-zk01.foo.bar:9092 --create --topic peter-mirror01 --partitions 1 --replication-factor 3
+/usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server peter-zk01.foo.bar:9092 --topic peter-mirror01
+curl --header "Content-Type: application/json" --header "Accept: application/json" --request PUT --data '{"name": "peter-mirrormaker2","connector.class": "org.apache.kafka.connect.mirror.MirrorSourceConnector","tasks.max": "1","source.cluster.alias": "src","target.cluster.alias": "dst","source.cluster.bootstrap.servers": "peter-zk01.foo.bar:9092,peter-zk02.foo.bar:9092,peter-zk03.foo.bar:9092","target.cluster.bootstrap.servers": "peter-kafka01.foo.bar:9092,peter-kafka02.foo.bar:9092,peter-kafka03.foo.bar:9092","replication.factor": "3","topics": ".*" }' http://peter-kafka01.foo.bar:8083/connectors/peter-mirrormaker2/config
+
+P394
+curl http://peter-kafka01.foo.bar:8083/connectors/peter-mirrormaker2/status | python -m json.tool
+
+P395
+/usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --list
+/usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic src.peter-mirror01 --from-beginning
+
+P396
+sudo systemctl stop kafka-connect
+curl http://peter-kafka02.foo.bar:8083/connectors/peter-mirrormaker2/status | python -m json.tool
+
+P397
+sudo systemctl stop kafka-connect
+sudo systemctl stop kafka-server

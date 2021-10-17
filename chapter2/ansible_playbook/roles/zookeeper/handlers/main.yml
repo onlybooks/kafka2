@@ -1,0 +1,5 @@
+---
+- name: restart zookeeper-server
+  systemd:
+    name: zookeeper-server
+    state: restarted

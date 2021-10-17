@@ -1,0 +1,16 @@
+---
+- name: install docker
+  yum:
+    name: ['docker', 'python-pip']
+    state: latest
+
+- name: install docker python package
+  pip:
+    name: docker
+    extra_args: --user
+
+- name: make sure a service is running
+  systemd:
+    state: started
+    name: docker
+    enabled: True

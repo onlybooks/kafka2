@@ -1,0 +1,11 @@
+[Unit]
+Description=schema registry
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/confluent/bin/schema-registry-start /usr/local/confluent/etc/schema-registry/schema-registry.properties
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

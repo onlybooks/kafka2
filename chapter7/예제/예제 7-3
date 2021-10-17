@@ -1,0 +1,11 @@
+[Unit]
+Description=JMX Exporter for Kafka
+After=kafka-server.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/java -jar /usr/local/jmx/jmx_prometheus_httpserver-0.13.1-SNAPSHOT-jar-with-dependencies.jar 7071 /usr/local/jmx/jmx_prometheus_httpserver.yml
+
+[Install]
+WantedBy=multi-user.target

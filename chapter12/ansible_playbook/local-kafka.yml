@@ -1,0 +1,31 @@
+---
+- hosts: 127.0.0.1
+  connection: localhost
+  tasks:
+    - name: download kafka from web
+      get_url:
+        url: https://archive.apache.org/dist/kafka/{{ kafkaversion }}/kafka_2.12-{{ kafkaversion }}.tgz
+        dest: /home/{{ user_name }}
+        mode: '0600'
+
+    - name: unarchive kafka
+      unarchive:
+        src: /home/{{ user_name }}/kafka_2.12-{{ kafkaversion }}.tgz
+        dest: /home/{{ user_name }}
+
+    - name: check delete-topics.sh exists
+      stat:
+        path: /home/{{ user_name }}/kafka2/chapter12/ansible_playbook/delete-topics.sh
+      register: stat_result
+
+    - name : print a deub message
+      debug:
+        msg: "check /home/{{ user_name }}/kafka2/chapter12/ansible_playbook/delete-topics.sh"
+      when: stat_result.exists is not defined
+
+    - name: run a script with arguments
+      script:
+        cmd: "/home/{{ user_name }}/kafka2/chapter12/ansible_playbook/delete-topics.sh {{ item }}"
+      with_items:
+        - kafka3
+        - kafka4

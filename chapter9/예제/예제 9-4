@@ -1,0 +1,7 @@
+KafkaServer {
+    com.sun.security.auth.module.Krb5LoginModule required
+    useKeyTab=true
+    storeKey=true
+    keyTab="/usr/local/kafka/keytabs/peter-kafka01.service.keytab"
+    principal="kafka/peter-kafka01.foo.bar@FOO.BAR";
+};

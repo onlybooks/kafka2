@@ -1,0 +1,23 @@
+---
+- hosts: elasticsearch
+  become: true
+  connection: ssh
+  roles:
+    - docker
+  tasks:
+    - name: start elasticsearch container
+      docker_container:
+        name: elasticsearch
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
+        network_mode: host
+        env:
+          discovery.type: single-node
+          ES_JAVA_OPTS: "-Xms1024m -Xmx1024m"
+
+    - name: start kibana container
+      docker_container:
+        name: kibana
+        image: docker.elastic.co/kibana/kibana:7.12.1
+        network_mode: host
+        env:
+          ELASTICSEARCH_HOSTS: "http://peter-kafka02.foo.bar:9200"

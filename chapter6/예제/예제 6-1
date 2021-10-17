@@ -1,0 +1,7 @@
+print('Topic: {}, '
+      'Partition: {}, '
+      'Offset: {}, '
+      'Received message: {}'.format(msg.topic(),
+                                    msg.partition(),
+                                    msg.offset(),
+                                    msg.value().decode('utf-8')))

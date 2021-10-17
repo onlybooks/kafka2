@@ -1,0 +1,7 @@
+---
+- hosts: kerberoshosts
+  become: true
+  connection: ssh
+  roles:
+    - common
+    - kerberos

@@ -1,0 +1,10 @@
+{"namespace": "student.avro",
+ "type": "record",
+ "doc": "This is an example of Avro.",
+ "name": "Student",
+ "fields": [
+     {"name": "name", "type": ["null", "string"], "default": null, "doc": "Name of the student"},
+     {"name": "class", "type": "int", "default": 1, "doc": "Class of the student"},
+     {"name": "age", "type": "int", "default": 1, "doc": "Age of the student"}
+ ]
+}

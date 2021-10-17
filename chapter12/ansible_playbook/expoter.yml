@@ -1,0 +1,8 @@
+---
+- hosts:
+   - zkhosts
+   - kafkahosts
+  become: true
+  connection: ssh
+  roles:
+    - exporterall

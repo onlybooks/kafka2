@@ -1,0 +1,14 @@
+---
+- name: Set timezone to Asia/Seoul
+  timezone:
+    name: Asia/Seoul
+
+- name: install Java and tools
+  yum:
+    name: ['dstat', 'java-1.8.0-openjdk', 'java-1.8.0-openjdk-devel', 'krb5-workstation', 'git', 'python-pip']
+    state: latest
+
+- name: install kazoo python package
+  pip:
+    name: kazoo
+    extra_args: --user

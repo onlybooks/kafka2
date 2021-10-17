@@ -1,0 +1,29 @@
+---
+- hosts: zkhosts
+  become: true
+  connection: ssh
+  vars:
+    - brokerid: "{{ inventory_hostname | regex_search('(peter-zk0[1-9]\\.foo\\.bar)') | regex_replace('\\.foo\\.bar', '') | regex_replace('^peter-zk0', '') }}"
+    - zookeeperinfo: peter-zk01.foo.bar:2181,peter-zk02.foo.bar:2181,peter-zk03.foo.bar:2181/kafka4
+    - dir_path: /data/kafka4-logs
+  roles:
+    - kafka
+  tasks:
+    - name: copy kafka conf file
+      copy:
+        src: roles/kafka/files/confluentinc-kafka-connect-avro-converter-5.5.3.zip
+        dest: /opt
+        mode: '0644'
+        backup: no
+
+    - name: unarchive avro converter
+      unarchive:
+        src: /opt/confluentinc-kafka-connect-avro-converter-5.5.3.zip
+        dest: /usr/local/kafka
+        remote_src: yes
+
+    - name: make sure a service is running
+      systemd:
+        state: started
+        name: kafka-connect
+        enabled: yes

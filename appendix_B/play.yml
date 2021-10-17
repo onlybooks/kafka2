@@ -1,0 +1,15 @@
+- name: ansible playbook
+  hosts:
+    - testservers
+  remote_user: ec2-user
+  connection: ssh
+  tasks:
+    - name: Example from an Ansible Playbook(copy)
+      copy:
+        src: /home/ec2-user/ex.txt
+        dest: /home/ec2-user/ex.txt
+        mode: '0644'
+
+    - name: Example from an Ansible Playbook(shell)
+      shell:
+        cmd: mv ex.txt ex1.txt

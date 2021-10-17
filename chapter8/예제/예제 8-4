@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "partitions": [
+    {
+      "topic": "peter-scaleout1",
+      "partition": 0,
+      "replicas": [
+        2
+      ],
+      "log_dirs": [
+        "any"
+      ]
+    },
+    {
+      "topic": "peter-scaleout1",
+      "partition": 1,
+      "replicas": [
+        3
+      ],
+      "log_dirs": [
+        "any"
+      ]
+    },
+    {
+      "topic": "peter-scaleout1",
+      "partition": 2,
+      "replicas": [
+        4
+      ],
+      "log_dirs": [
+        "any"
+      ]
+    },
+    {
+      "topic": "peter-scaleout1",
+      "partition": 3,
+      "replicas": [
+        1
+      ],
+      "log_dirs": [
+        "any"
+      ]
+    }
+  ]
+}

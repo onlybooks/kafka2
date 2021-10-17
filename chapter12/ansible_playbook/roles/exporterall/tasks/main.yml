@@ -1,0 +1,96 @@
+---
+- name: stop services
+  systemd:
+    state: stopped
+    name: "{{ item }}"
+  with_items:
+    - kafka-exporter
+    - node-exporter
+    - jmx-exporter
+  ignore_errors: yes
+
+- name: Downlad kafka exporter from web
+  get_url:
+    url: "{{ item }}"
+    dest: /opt/
+    mode: '0600'
+  with_items:
+    - https://github.com/danielqsj/kafka_exporter/releases/download/v1.2.0/kafka_exporter-1.2.0.linux-386.tar.gz
+    - https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-386.tar.gz
+
+- name: unarchive exporter
+  unarchive:
+    src: "/opt/{{ item }}"
+    dest: /usr/local/
+    remote_src: yes
+  with_items:
+    - kafka_exporter-1.2.0.linux-386.tar.gz
+    - node_exporter-1.0.1.linux-386.tar.gz
+
+- name: Move to kafka_exporter
+  copy:
+    remote_src: yes
+    src: /usr/local/kafka_exporter-1.2.0.linux-386/kafka_exporter
+    dest: /usr/sbin/
+    mode: '0755'
+
+- name: setup link node_exporter
+  file:
+    src: /usr/local/node_exporter-1.0.1.linux-386
+    dest: /usr/local/node_exporter
+    state: link
+    force: yes
+    remote_src: yes
+
+- name: copy kafka exporter stop
+  copy:
+    src: kafka-exporter-stop.sh
+    dest: /usr/sbin/kafka-exporter-stop.sh
+    mode: '0755'
+
+- name: copy jmx exporter
+  copy:
+    src: jmx_prometheus_httpserver-0.13.1-SNAPSHOT-jar-with-dependencies.jar
+    dest: /usr/local/jmx
+    mode: '0644'
+
+- name: copy jmx exporter config
+  copy:
+    src: jmx_prometheus_httpserver.yml
+    dest: /usr/local/jmx/jmx_prometheus_httpserver.yml
+    mode: '0644'
+
+- name: copy kafka exporter in systemd
+  template:
+    src: kafka-exporter.service.j2
+    dest: /etc/systemd/system/kafka-exporter.service
+    owner: root
+    group: root
+    mode: '0644'
+    backup: no
+
+- name: copy node, jmx exporter in systemd
+  copy:
+    src: "{{ item }}"
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+    mode: '0644'
+    backup: no
+  with_items:
+    - node-exporter.service
+    - jmx-exporter.service
+
+- name: just force systemd to reload configs
+  systemd:
+    daemon_reload: yes
+
+- name: make sure a service is running
+  systemd:
+    state: started
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - kafka-exporter
+    - node-exporter
+    - jmx-exporter
