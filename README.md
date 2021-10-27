@@ -1,4 +1,4 @@
-![실전카프카개발부터운영까지]https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FOuwMj%2FbtrhPBcrc3r%2FAkt1a7QwXamKWBqBLxC1UK%2Fimg.png
+![실전카프카개발부터운영까지](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FOuwMj%2FbtrhPBcrc3r%2FAkt1a7QwXamKWBqBLxC1UK%2Fimg.png)
 # 실전 카프카 개발부터 운영까지
 ## 데이터 플랫폼의 중추 아파치 카프카의 내부 동작과 개발, 운영, 보안의 모든 것
 ### 고승범 지음
@@ -7,7 +7,7 @@
 
 ### 아파치 카프카의 공동 창시자 준 라오(Jun Rao)가 추천한 책!
 
-![로고]https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdYLUTO%2FbtrinZ3y2KE%2FK8kImx1TooxkzrjpRDIfBK%2Fimg.png
+![로고](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdYLUTO%2FbtrinZ3y2KE%2FK8kImx1TooxkzrjpRDIfBK%2Fimg.png)
 <em>국내 최초이자 유일한 컨플루언트 공인 아파치 카프카 강사(Confluent Certified Trainer for Apache Kafka)</em>와 <em>공인 아파치 카프카 관리자(Confluent Certified Administrator for Apache Kafka)</em> 자격을 보유한 『카프카, 데이터 플랫폼의 최강자』 저자 고승범이 SKT, 카카오 등 국내 최대 규모의 데이터 플랫폼상에서 카프카를 운영하며 쌓아온 현업 경험과 노하우를 이 책에 모두 담아냈다.
 
 ### 대량의 데이터를 손실없이 빠르고 정확하게 처리하고 싶다면? 정답은 카프카!
@@ -32,4 +32,4 @@
 데이터 표준화와 실시간 처리에 대해 고민하는 아키텍트
 효율적으로 데이터를 수집, 처리, 분석하기를 원하는 아키텍트
   
-![상세이미지]https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FFVuGE%2Fbtrijr8dqxe%2FORfjrnZAornNG6tfbKhplK%2Fimg.jpg
+![상세이미지](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FFVuGE%2Fbtrijr8dqxe%2FORfjrnZAornNG6tfbKhplK%2Fimg.jpg)
