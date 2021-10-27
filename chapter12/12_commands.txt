@@ -1,18 +1,18 @@
-P406
+P400
 cd kafka2/
 cd chapter12/ansible_playbook
 ansible-playbook -i hosts site.yml
 ansible-playbook -i hosts expoter.yml
 ansible-playbook -i hosts monitoring.yml
 
-P410
+P404
 curl http://peter-zk01.foo.bar:8083/connectors
 curl --header "Content-Type: application/json" --header "Accept: application/json" --request PUT --data '{"name": "peter-mirrormaker2","connector.class": "org.apache.kafka.connect.mirror.MirrorSourceConnector","tasks.max": "1","source.cluster.alias": "src","target.cluster.alias": "dst","source.cluster.bootstrap.servers": "peter-kafka01.foo.bar:9092,peter-kafka02.foo.bar:9092,peter-kafka03.foo.bar:9092","target.cluster.bootstrap.servers": "peter-zk01.foo.bar:9092,peter-zk02.foo.bar:9092,peter-zk03.foo.bar:9092","replication.factor": "3","topics": "peter-avro01-kafka1" }' http://peter-zk01.foo.bar:8083/connectors/peter-mirrormaker2/config
 
-P411
+P405
 curl http://peter-zk01.foo.bar:8083/connectors/peter-mirrormaker2/status | python -m json.tool
 
-P415
+P409
 git clone https://github.com/onlybooks/kafka2.git
 sudo yum -y install python3
 python3 -m venv venv12
@@ -21,34 +21,36 @@ pip install confluent-kafka[avro]
 pip install names
 pip install elasticsearch
 
-P416
+P410
 python kafka2/chapter12/python/producer-1_kafka-1_v1.py
 
-P418
+P412
 python kafka2/chapter12/python/consumer-1_kafka-1_v1.py
 
-P419
+P413
 curl -X GET 'http://peter-kafka02.foo.bar:9200/_cat/health?v'
 curl -X GET 'http://peter-kafka02.foo.bar:9200/_cat/indices?v'
 
-P422
+P416
 python kafka2/chapter12/python/consumer_kafka-2_producer_es_v1.py
+
+P417
 curl -X GET 'http://peter-kafka02.foo.bar:9200/_cat/indices?v'
 
-P431
+P426
 python kafka2/chapter12/python/consumer-1_kafka-1_v2.py
 
-P433
+P428
 python kafka2/chapter12/python/producer-1_kafka-1_v2.py
 
-P435
+P430
 python kafka2/chapter12/python/consumer_kafka-2_producer_es_v2.py
 
-P436
+P431
 curl http://peter-kafka03.foo.bar:8081/schemas | python -m json.tool
 
-P437
+P432
 curl -X GET 'http://peter-kafka02.foo.bar:9200/_cat/indices?v'
 
-P438
+P433
 python kafka2/chapter12/python/producer-1_kafka-1_v2.py

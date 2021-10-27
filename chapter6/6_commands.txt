@@ -1,41 +1,39 @@
-P167
+P189
 sudo yum -y install python3
 python3 -m venv venv6
 source venv6/bin/activate
 pip install confluent-kafka
 
-P168
+P190
 sudo yum -y install git
 git clone https://github.com/onlybooks/kafka2.git
 cd kafka2/chapter6/
 python consumer_standard.py
 
-P170
+P192
 python producer.py
 
-P171
+P193
 /usr/local/kafka/bin/kafka-consumer-groups.sh --bootstrap-server peter-kafka01.foo.bar:9092 --group peter-consumer01 --describe
 
-P172
+P194
 /usr/local/kafka/bin/kafka-consumer-groups.sh --bootstrap-server peter-kafka01.foo.bar:9092 --group peter-consumer01 --describe
 
-P175
+P197
 python consumer_static.py
 /usr/local/kafka/bin/kafka-consumer-groups.sh --bootstrap-server peter-kafka01.foo.bar:9092 --group peter-consumer02 --describe
 
-P176
+P198
 /usr/local/kafka/bin/kafka-consumer-groups.sh --bootstrap-server peter-kafka01.foo.bar:9092 --group peter-consumer02 --describe
 
-P177
+P199
 /usr/local/kafka/bin/kafka-consumer-groups.sh --bootstrap-server peter-kafka01.foo.bar:9092 --group peter-consumer02 --describe
 
-P191
+P213
 cd kafka2/chapter6/
 java -jar ExactlyOnceConsumer.jar
 
-P192
+P214
 cd kafka2/chapter5/
 java -jar ExactlyOnceProducer.jar
-
-P193
 /usr/local/kafka/bin/kafka-dump-log.sh --print-data-log --files /data/kafka-logs/peter-test05-0/00000000000000000000.log

@@ -1,14 +1,14 @@
-P38
+P62
 chmod 600 keypair.pem
 
-P41
+P65
 ssh -i keypair.pem -l ec2-user 13.125.209.60
 ssh -i keypair.pem ec2-user@13.125.209.60
 
-P43
+P67
 ping -c 2 peter-zk01.foo.bar
 
-P46
+P70
 sudo amazon-linux-extras install -y ansible2
 sudo yum install -y git
 git clone https://github.com/onlybooks/kafka2.git
@@ -17,22 +17,22 @@ chmod 600 keypair.pem
 ssh-agent bash
 ssh-add keypair.pem
 
-P47
+P71
 ssh-keygen
 cat /home/ec2-user/.ssh/id_rsa.pub
 
-P48
+P72
 vi /home/ec2-user/.ssh/authorized_keys
 chmod 600 .ssh/authorized_keys
 cd chapter2/ansible_playbook
 ansible-playbook -i hosts zookeeper.yml
 sudo systemctl status zookeeper-server
 
-P50
+P74
 ansible-playbook -i hosts kafka.yml
 sudo systemctl status kafka-server
 
-P53
+P77
 /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --create --topic peter-overview01 --partitions 1 --replication-factor 3
 /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-overview01
 /usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-overview01

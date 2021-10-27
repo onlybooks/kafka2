@@ -1,53 +1,53 @@
-P91
+P115
 /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --create --topic peter-test01 --partitions 1 --replication-factor 3
 /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-test01 --describe
 
-P92
+P116
 /usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-test01
 /usr/local/kafka/bin/kafka-dump-log.sh --print-data-log --files /data/kafka-logs/peter-test01-0/00000000000000000000.log
 
-P97
+P121
 cat /data/kafka-logs/replication-offset-checkpoint
 
-P98
+P122
 /usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-test01
 cat /data/kafka-logs/replication-offset-checkpoint
 
-P108
+P132
 /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --create --topic peter-test02 --partitions 1 --replication-factor 2
 /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-test02 --describe
 
-P109
+P133
 cat /data/kafka-logs/peter-test02-0/leader-epoch-checkpoint
 
-P110
+P134
 /usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-test02
 cat /data/kafka-logs/peter-test02-0/leader-epoch-checkpoint
 
-P111
+P135
 sudo systemctl stop kafka-server
 sudo systemctl status kafka-server
 cat /data/kafka-logs/peter-test02-0/leader-epoch-checkpoint
 
-P112
+P136
 sudo systemctl start kafka-server
 
-P117
+P141
 /usr/local/kafka/bin/kafka-configs.sh --bootstrap-server peter-kafka01.foo.bar:9092 --broker 1 --describe --all
 
-P118
+P142
 /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --create --topic peter-test03 --partitions 1 --replication-factor 3
 /usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-test03
 /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-test03 --from-beginning
 
-P119
+P143
 /usr/local/kafka/bin/kafka-configs.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-test03 --add-config retention.ms=0 --alter
 /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-test03 --describe
 ls /data/kafka-logs/peter-test03-0/
 
-P120
+P144
 ls /data/kafka-logs/peter-test03-0/
 /usr/local/kafka/bin/kafka-configs.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-test03 --delete-config retention.ms --alter
 
-P121
+P145
 /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --topic peter-test03 --describe

@@ -1,32 +1,32 @@
-P269
+P289
 sudo mkdir -p /usr/local/kafka/ssl
 cd /usr/local/kafka/ssl/
 export SSLPASS=peterpass
 sudo keytool -keystore kafka.server.keystore.jks -alias localhost -keyalg RSA -validity 365 -genkey -storepass $SSLPASS -keypass $SSLPASS -dname "CN=peter-kafka01.foo.bar" -storetype pkcs12
 
-P270
+P290
 ls
 keytool -list -v -keystore kafka.server.keystore.jks
 
-P272
+P292
 sudo openssl req -new -x509 -keyout ca-key -out ca-cert -days 356 -subj "/CN=foo.bar" -nodes
 ls
 
-P273
+P293
 sudo keytool -keystore kafka.server.truststore.jks -alias CARoot -importcert -file ca-cert -storepass $SSLPASS -keypass $SSLPASS
 keytool -list -v -keystore kafka.server.truststore.jks
 
-P275
+P295
 sudo keytool -keystore kafka.server.keystore.jks -alias localhost -certreq -file cert-file -storepass $SSLPASS -keypass $SSLPASS
 ls
 sudo openssl x509 -req -CA ca-cert -CAkey ca-key -in cert-file -out cert-signed -days 365 -CAcreateserial -passin pass:$PASSWORD
 
-P276
+P296
 sudo keytool -keystore kafka.server.keystore.jks -alias CARoot -importcert -file ca-cert -storepass $SSLPASS -keypass $SSLPASS
 sudo keytool -keystore kafka.server.keystore.jks -alias localhost -importcert -file cert-signed -storepass $SSLPASS -keypass $SSLPASS
 keytool -list -v -keystore kafka.server.keystore.jks
 
-P278
+P298
 sudo mkdir -p /usr/local/kafka/ssl
 export SSLPASS=peterpass
 sudo mkdir -p /usr/local/kafka/ssl
@@ -34,14 +34,14 @@ export SSLPASS=peterpass
 sudo keytool -keystore kafka.server.keystore.jks -alias localhost -keyalg RSA -validity 365 -genkey -storepass $SSLPASS -keypass $SSLPASS -dname "CN=peter-kafka02.foo.bar" -storetype pkcs12
 sudo keytool -keystore kafka.server.keystore.jks -alias localhost -keyalg RSA -validity 365 -genkey -storepass $SSLPASS -keypass $SSLPASS -dname "CN=peter-kafka03.foo.bar" -storetype pkcs12
 
-P279
+P299
 ssh-keygen
 cat .ssh/id_rsa.pub
 vi /home/ec2-user/.ssh/authorized_keys
 vi /home/ec2-user/.ssh/authorized_keys
 cd /usr/local/kafka/ssl/
 
-P280
+P300
 scp ca-cert peter-kafka02.foo.bar:~
 scp ca-key peter-kafka02.foo.bar:~
 scp kafka.server.truststore.jks peter-kafka02.foo.bar:~
@@ -57,7 +57,7 @@ sudo openssl x509 -req -CA ca-cert -CAkey ca-key -in cert-file -out cert-signed 
 sudo keytool -keystore kafka.server.keystore.jks -alias localhost -certreq -file cert-file -storepass $SSLPASS -keypass $SSLPASS
 sudo openssl x509 -req -CA ca-cert -CAkey ca-key -in cert-file -out cert-signed -days 365 -CAcreateserial -passin pass:$PASSWORD
 
-P281
+P301
 sudo keytool -keystore kafka.server.keystore.jks -alias CARoot -importcert -file ca-cert -storepass $SSLPASS -keypass $SSLPASS
 sudo keytool -keystore kafka.server.keystore.jks -alias localhost -importcert -file cert-signed -storepass $SSLPASS -keypass $SSLPASS
 sudo keytool -keystore kafka.server.keystore.jks -alias CARoot -importcert -file ca-cert -storepass $SSLPASS -keypass $SSLPASS
@@ -65,36 +65,36 @@ sudo keytool -keystore kafka.server.keystore.jks -alias localhost -importcert -f
 keytool -list -v -keystore kafka.server.keystore.jks
 keytool -list -v -keystore kafka.server.keystore.jks
 
-P282
+P302
 sudo vi /usr/local/kafka/config/server.properties
 sudo systemctl restart kafka-server
 
-P283
+P303
 openssl s_client -connect peter-kafka01.foo.bar:9093 -tls1 </dev/null 2>/dev/null | grep -E 'Verify return code'
 cd /usr/local/kafka/ssl/
 sudo keytool -keystore kafka.client.truststore.jks -alias CARoot -importcert -file ca-cert -storepass $SSLPASS -keypass $SSLPASS
 /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server peter-kafka01.foo.bar:9092 --create --topic peter-test07 --partitions 1 --replication-factor 3
 
-P284
+P304
 vi /home/ec2-user/ssl.config
 /usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server peter-kafka01.foo.bar:9093 --topic peter-test07 --producer.config /home/ec2-user/ssl.config
 /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server peter-kafka01.foo.bar:9093 --topic peter-test07 --from-beginning --consumer.config /home/ec2-user/ssl.config
 
-P286
+P306
 cd ansible_playbook
 ansible-playbook -i hosts kerberos.yml
 
-P287
+P307
 sudo kadmin.local -q "add_principal -randkey peter01@FOO.BAR"
 sudo kadmin.local -q "add_principal -randkey peter02@FOO.BAR"
 sudo kadmin.local -q "add_principal -randkey admin@FOO.BAR"
 sudo kadmin.local -q "add_principal -randkey kafka/peter-kafka01.foo.bar@FOO.BAR"
 sudo kadmin.local -q "add_principal -randkey kafka/peter-kafka02.foo.bar@FOO.BAR"
 sudo kadmin.local -q "add_principal -randkey kafka/peter-kafka03.foo.bar@FOO.BAR"
-
-P288
 mkdir -p /home/ec2-user/keytabs/
 sudo kadmin.local -q "ktadd -k /home/ec2-user/keytabs/peter01.user.keytab peter01@FOO.BAR"
+
+P308
 sudo kadmin.local -q "ktadd -k /home/ec2-user/keytabs/peter02.user.keytab peter02@FOO.BAR"
 sudo kadmin.local -q "ktadd -k /home/ec2-user/keytabs/admin.user.keytab admin@FOO.BAR"
 sudo kadmin.local -q "ktadd -k /home/ec2-user/keytabs/peter-kafka01.service.keytab kafka/peter-kafka01.foo.bar@FOO.BAR"
@@ -102,70 +102,70 @@ sudo kadmin.local -q "ktadd -k /home/ec2-user/keytabs/peter-kafka02.service.keyt
 sudo kadmin.local -q "ktadd -k /home/ec2-user/keytabs/peter-kafka03.service.keytab kafka/peter-kafka03.foo.bar@FOO.BAR"
 sudo chown -R ec2-user.ec2-user keytabs/
 
-P289
+P309
 scp -i keypair.pem -r peter-zk01.foo.bar:~/keytabs /home/ec2-user
 sudo mv keytabs /usr/local/kafka
 cat /etc/krb5.conf
-
-P290
 kinit -kt /usr/local/kafka/keytabs/peter01.user.keytab peter01
+
+P310
 klist
 kinit -kt /usr/local/kafka/keytabs/peter-kafka01.service.keytab kafka/peter-kafka01.foo.bar
 
-P291
+P311
 sudo vi /usr/local/kafka/config/server.properties
 sudo vi /usr/local/kafka/config/kafka_server_jaas.conf
 
-P292
+P312
 sudo vi /usr/local/kafka/config/jmx
 sudo systemctl restart kafka-server
 sudo netstat -ntlp | grep 9094
 
-P293
+P313
 vi kafka_client_jaas.conf
 export KAFKA_OPTS="-Djava.security.auth.login.config=/home/ec2-user/kafka_client_jaas.conf"
 vi kerberos.config
 
-P294
+P314
 kinit -kt /usr/local/kafka/keytabs/peter01.user.keytab peter01
 /usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server peter-kafka01.foo.bar:9094 --topic peter-test08 --producer.config kerberos.config
 /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server peter-kafka01.foo.bar:9094 --topic peter-test08 --from-beginning --consumer.config kerberos.config
 
-P295
+P315
 kdestroy
 klist
 /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server peter-kafka01.foo.bar:9094 --topic peter-test08 --from-beginning --consumer.config kerberos.config
 
-P297
+P317
 sudo vi /usr/local/kafka/config/server.properties
 sudo systemctl restart kafka-server
 
-P298
+P318
 unset KAFKA_OPTS
 /usr/local/kafka/bin/kafka-topics.sh --zookeeper peter-zk01.foo.bar:2181 --create --topic peter-test09 --partitions 1 --replication-factor 1
 /usr/local/kafka/bin/kafka-topics.sh --zookeeper peter-zk01.foo.bar:2181 --create --topic peter-test10 --partitions 1 --replication-factor 1
 
-P299
+P319
 /usr/local/kafka/bin/kafka-acls.sh --authorizer-properties zookeeper.connect=peter-zk01.foo.bar:2181 --add --allow-principal User:peter01 --operation Read --operation Write --operation DESCRIBE --topic peter-test09
 
-P300
+P320
 /usr/local/kafka/bin/kafka-acls.sh --authorizer-properties zookeeper.connect=peter-zk01.foo.bar:2181 --add --allow-principal User:peter02 --operation Read --operation Write --operation DESCRIBE --topic peter-test10
 /usr/local/kafka/bin/kafka-acls.sh --authorizer-properties zookeeper.connect=peter-zk01.foo.bar:2181 --list
 
-P301
+P321
 kinit -kt /usr/local/kafka/keytabs/peter01.user.keytab peter01
 export KAFKA_OPTS="-Djava.security.auth.login.config=/home/ec2-user/kafka_client_jaas.conf"
 /usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server peter-kafka01.foo.bar:9094 --topic peter-test09 --producer.config kerberos.config
 
-P302
+P322
 /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server peter-kafka01.foo.bar:9094 --topic peter-test09 --from-beginning --consumer.config kerberos.config
 
-P303
+P323
 /usr/local/kafka/bin/kafka-acls.sh --authorizer-properties zookeeper.connect=peter-zk01.foo.bar:2181 --add --allow-principal User:peter01 --operation Read --group '*'
 /usr/local/kafka/bin/kafka-acls.sh --authorizer-properties zookeeper.connect=peter-zk01.foo.bar:2181 --list
 /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server peter-kafka01.foo.bar:9094 --topic peter-test09 --from-beginning --consumer.config kerberos.config
 
-P304
+P324
 kinit -kt /usr/local/kafka/keytabs/peter02.user.keytab peter02
 export KAFKA_OPTS="-Djava.security.auth.login.config=/home/ec2-user/kafka_client_jaas.conf"
 /usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server peter-kafka01.foo.bar:9094 --topic peter-test10 --producer.config kerberos.config
@@ -174,7 +174,6 @@ kinit -kt /usr/local/kafka/keytabs/admin.user.keytab admin
 /usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server peter-kafka01.foo.bar:9094 --topic peter-test09 --producer.config kerberos.config
 /usr/local/kafka/bin/kafka-console-producer.sh --bootstrap-server peter-kafka01.foo.bar:9094 --topic peter-test10 --producer.config kerberos.config
 
-P305
+P325
 /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server peter-kafka01.foo.bar:9094 --topic peter-test09 --from-beginning --consumer.config kerberos.config
 /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server peter-kafka01.foo.bar:9094 --topic peter-test10 --from-beginning --consumer.config kerberos.config
-
