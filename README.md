@@ -1,13 +1,15 @@
-![실전카프카개발부터운영까지](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FOuwMj%2FbtrhPBcrc3r%2FAkt1a7QwXamKWBqBLxC1UK%2Fimg.png){: width="600"}
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FOuwMj%2FbtrhPBcrc3r%2FAkt1a7QwXamKWBqBLxC1UK%2Fimg.png" width="600px">
+
 # 실전 카프카 개발부터 운영까지
 ## 데이터 플랫폼의 중추 아파치 카프카의 내부 동작과 개발, 운영, 보안의 모든 것
 ### 고승범 지음
-512쪽 | 33,000원 | 2021년 10월 29일 출간 | 180*235*25 | ISBN 9791189909345 
+512쪽 | 33,000원 | 2021년 10월 29일 출간 | 180*235*25 | ISBN 9791189909345
+
 판매처 | [교보문고](http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&barcode=9791189909345&fbclid=IwAR0ArKj65Bqo7k6YrI8KtQGxOB_UIyHiOdKXWLDbumzfQ4Tjb8pWVPg3M1Q) [YES24](http://www.yes24.com/Product/Goods/104410708) [알라딘](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281606911) [인터파크](http://book.interpark.com/product/BookDisplay.do?_method=detail&sc.shopNo=0000400000&sc.prdNo=354228707) + 전국 교보문고 매장
 
 ### 아파치 카프카의 공동 창시자 준 라오(Jun Rao)가 추천한 책!
 
-![로고](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdYLUTO%2FbtrinZ3y2KE%2FK8kImx1TooxkzrjpRDIfBK%2Fimg.png){: width="70%"}
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdYLUTO%2FbtrinZ3y2KE%2FK8kImx1TooxkzrjpRDIfBK%2Fimg.png" width="70%">
 <em>국내 최초이자 유일한 컨플루언트 공인 아파치 카프카 강사(Confluent Certified Trainer for Apache Kafka)</em>와 <em>공인 아파치 카프카 관리자(Confluent Certified Administrator for Apache Kafka)</em> 자격을 보유한 『카프카, 데이터 플랫폼의 최강자』 저자 고승범이 SKT, 카카오 등 국내 최대 규모의 데이터 플랫폼상에서 카프카를 운영하며 쌓아온 현업 경험과 노하우를 이 책에 모두 담아냈다.
 
 ### 대량의 데이터를 손실없이 빠르고 정확하게 처리하고 싶다면? 정답은 카프카!
