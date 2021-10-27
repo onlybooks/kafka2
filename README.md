@@ -11,7 +11,7 @@
 
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdYLUTO%2FbtrinZ3y2KE%2FK8kImx1TooxkzrjpRDIfBK%2Fimg.png" width="70%">
 
-##### 국내 최초이자 유일한 컨플루언트 공인 아파치 카프카 강사(Confluent Certified Trainer for Apache Kafka)와 공인 아파치 카프카 관리자(Confluent Certified Administrator for Apache Kafka) 자격을 보유한 <카프카, 데이터 플랫폼의 최강자> 저자 고승범이 SKT, 카카오 등 국내 최대 규모의 데이터 플랫폼상에서 카프카를 운영하며 쌓아온 현업 경험과 노하우를 이 책에 모두 담아냈다.
+#### 국내 최초이자 유일한 컨플루언트 공인 아파치 카프카 강사(Confluent Certified Trainer for Apache Kafka)와 공인 아파치 카프카 관리자(Confluent Certified Administrator for Apache Kafka) 자격을 보유한 <카프카, 데이터 플랫폼의 최강자> 저자 고승범이 SKT, 카카오 등 국내 최대 규모의 데이터 플랫폼상에서 카프카를 운영하며 쌓아온 현업 경험과 노하우를 이 책에 모두 담아냈다.
 
 ### 대량의 데이터를 손실없이 빠르고 정확하게 처리하고 싶다면? 정답은 카프카!
 풍부한 그림으로 쉽고 빠르게 이해하는 카프카의 내부 구조와 동작 방식부터 카프카 클라이언트의 기본이 되는 예제 코드와 실제 운영에서 필요한 핵심 노하우는 물론이고, 365일 안전한 카프카를 운영할 수 있는 보안과 모니터링 기법, 운영 편의성과 효율성을 극대화할 수 있는 스키마 레지스트리와 카프카 커넥트까지 카프카에 대한 모든 것을 담은 가장 완벽하고 상세한 최고의 가이드북!
