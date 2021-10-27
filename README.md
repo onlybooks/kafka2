@@ -1,5 +1,4 @@
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FOuwMj%2FbtrhPBcrc3r%2FAkt1a7QwXamKWBqBLxC1UK%2Fimg.png" width="600px">
-
 # 실전 카프카 개발부터 운영까지
 ## 데이터 플랫폼의 중추 아파치 카프카의 내부 동작과 개발, 운영, 보안의 모든 것
 ### 고승범 지음
@@ -10,6 +9,7 @@
 ### 아파치 카프카의 공동 창시자 준 라오(Jun Rao)가 추천한 책!
 
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdYLUTO%2FbtrinZ3y2KE%2FK8kImx1TooxkzrjpRDIfBK%2Fimg.png" width="70%">
+
 #### 국내 최초이자 유일한 컨플루언트 공인 아파치 카프카 강사(Confluent Certified Trainer for Apache Kafka)와 
 #### 공인 아파치 카프카 관리자(Confluent Certified Administrator for Apache Kafka) 자격을 보유한 
 #### <카프카, 데이터 플랫폼의 최강자> 저자 고승범이 
