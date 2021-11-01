@@ -7,6 +7,8 @@
 
 판매처 | [[교보문고]](http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&barcode=9791189909345&fbclid=IwAR0ArKj65Bqo7k6YrI8KtQGxOB_UIyHiOdKXWLDbumzfQ4Tjb8pWVPg3M1Q) [[YES24]](http://www.yes24.com/Product/Goods/104410708) [[알라딘]](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=281606911) [[인터파크]](http://book.interpark.com/product/BookDisplay.do?_method=detail&sc.shopNo=0000400000&sc.prdNo=354228707) + 전국 교보문고 매장
 
+#### 정오표: https://www.onlybook.co.kr/entry/kafka2-errata
+
 ### 아파치 카프카의 공동 창시자 준 라오(Jun Rao)가 추천한 책!
 
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdYLUTO%2FbtrinZ3y2KE%2FK8kImx1TooxkzrjpRDIfBK%2Fimg.png" width="70%">
