@@ -6,10 +6,10 @@ services:
     hostname: zk1
     container_name: zk1
     ports:
-      - "2181:2181"
+      - "12181:12181"
     environment:
       - ZOOKEEPER_SERVER_ID=1
-      - ZOOKEEPER_CLIENT_PORT=2181
+      - ZOOKEEPER_CLIENT_PORT=12181
       - ZOOKEEPER_TICK_TIME=2000
       - ZOOKEEPER_INIT_LIMIT=5
       - ZOOKEEPER_SYNC_LIMIT=2
@@ -20,10 +20,10 @@ services:
     hostname: zk2
     container_name: zk2
     ports:
-      - "2182:2182"
+      - "22181:22181"
     environment:
       - ZOOKEEPER_SERVER_ID=2
-      - ZOOKEEPER_CLIENT_PORT=2182
+      - ZOOKEEPER_CLIENT_PORT=22181
       - ZOOKEEPER_TICK_TIME=2000
       - ZOOKEEPER_INIT_LIMIT=5
       - ZOOKEEPER_SYNC_LIMIT=2
@@ -34,10 +34,10 @@ services:
     hostname: zk3
     container_name: zk3
     ports:
-      - "2183:2183"
+      - "32181:32181"
     environment:
       - ZOOKEEPER_SERVER_ID=3
-      - ZOOKEEPER_CLIENT_PORT=2183
+      - ZOOKEEPER_CLIENT_PORT=32181
       - ZOOKEEPER_TICK_TIME=2000
       - ZOOKEEPER_INIT_LIMIT=5
       - ZOOKEEPER_SYNC_LIMIT=2
@@ -53,7 +53,7 @@ services:
       - "9991:9991"
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2182,zk3:2183
+      KAFKA_ZOOKEEPER_CONNECT: zk1:12181,zk2:22181,zk3:32181
       KAFKA_LISTENERS: INTERNAL://kafka1:9091
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:9091
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT
@@ -72,7 +72,7 @@ services:
       - "9992:9992"
     environment:
       KAFKA_BROKER_ID: 2
-      KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2182,zk3:2183
+      KAFKA_ZOOKEEPER_CONNECT: zk1:12181,zk2:22181,zk3:32181
       KAFKA_LISTENERS: INTERNAL://kafka2:9092
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT
@@ -91,7 +91,7 @@ services:
       - "9993:9993"
     environment:
       KAFKA_BROKER_ID: 3
-      KAFKA_ZOOKEEPER_CONNECT: zk1:2181,zk2:2182,zk3:2183
+      KAFKA_ZOOKEEPER_CONNECT: zk1:12181,zk2:22181,zk3:32181
       KAFKA_LISTENERS: INTERNAL://kafka3:9093
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka3:9093
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT
@@ -107,6 +107,6 @@ services:
     ports:
       - "9000:9000"
     environment:
-      ZK_HOSTS: "zk1:2181,zk2:2182,zk3:2183"
+      ZK_HOSTS: "zk1:12181,zk2:22181,zk3:32181"
       APPLICATION_SECRET: "random-secret"
     command: -Dpidfile.path=/dev/null
